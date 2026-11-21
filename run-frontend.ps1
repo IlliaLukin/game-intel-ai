@@ -4,4 +4,4 @@ if ($env:Path -notlike "*$nodeDir*") {
 }
 Set-Location "$PSScriptRoot\frontend"
 Write-Host "Starting GameIntel AI Frontend on http://localhost:3000..." -ForegroundColor Magenta
-npm run dev -- --port 3000
+npm run dev
