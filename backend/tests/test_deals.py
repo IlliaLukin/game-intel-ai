@@ -7,7 +7,7 @@ backend_dir = Path(__file__).resolve().parent.parent
 if str(backend_dir) not in sys.path:
     sys.path.insert(0, str(backend_dir))
 
-from app.services.deals import search_game_deals, parse_cheapshark_deals
+from app.services.deals import search_game_deals, parse_cheapshark_deals, parse_cheapshark_games
 
 
 def test_parse_cheapshark_deals():
@@ -50,6 +50,25 @@ def test_parse_cheapshark_deals_malformed_entry():
     assert results[0].title == "Half-Life 2"
 
 
+def test_parse_cheapshark_games():
+    raw_games = [
+        {
+            "gameID": "82",
+            "steamAppID": "400",
+            "cheapest": "9.99",
+            "cheapestDealID": "deal_portal",
+            "external": "Portal",
+            "thumb": "https://example.com/portal.jpg"
+        }
+    ]
+    results = parse_cheapshark_games(raw_games)
+    assert len(results) == 1
+    assert results[0].game_id == "82"
+    assert results[0].title == "Portal"
+    assert results[0].sale_price == 9.99
+    assert results[0].savings_percent > 0
+
+
 @pytest.mark.asyncio
 async def test_search_game_deals_empty_title():
     results = await search_game_deals("")
@@ -61,6 +80,6 @@ async def test_search_game_deals_live():
     # Live integration test against free CheapShark API
     results = await search_game_deals("Witcher", limit=3)
     assert isinstance(results, list)
-    if len(results) > 0:
-        assert "witcher" in results[0].title.lower()
-        assert results[0].sale_price >= 0
+    assert len(results) > 0
+    assert "witcher" in results[0].title.lower()
+    assert results[0].sale_price >= 0
