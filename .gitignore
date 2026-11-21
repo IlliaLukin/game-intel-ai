@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+env/
+.env
+*.log
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Superpowers local state
+.superpowers/
+
+# Node
+node_modules/
+dist/
+.DS_Store
