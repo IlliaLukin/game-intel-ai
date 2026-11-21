@@ -1,4 +1,4 @@
-import { GameDealItem, GameSearchResponse, AnalyzeRequest, AnalyzeResponse, HealthResponse } from '../types';
+import { GameDealItem, GameSearchResponse, GameSuggestion, GameSuggestResponse, AnalyzeRequest, AnalyzeResponse, HealthResponse } from '../types';
 
 const API_BASE = '/api';
 
@@ -24,6 +24,19 @@ export async function searchGames(query: string, limit: number = 12): Promise<Ga
   }
   const data: GameSearchResponse = await res.json();
   return data.results;
+}
+
+export async function fetchSuggestions(prefix: string, limit: number = 6): Promise<GameSuggestion[]> {
+  const trimmed = prefix.trim();
+  if (trimmed.length < 2) return [];
+  try {
+    const res = await fetch(`${API_BASE}/games/suggest?prefix=${encodeURIComponent(trimmed)}&limit=${limit}`);
+    if (!res.ok) return [];
+    const data: GameSuggestResponse = await res.json();
+    return data.suggestions || [];
+  } catch {
+    return [];
+  }
 }
 
 export async function analyzeDeal(req: AnalyzeRequest): Promise<AnalyzeResponse> {

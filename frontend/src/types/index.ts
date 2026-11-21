@@ -14,6 +14,19 @@ export interface GameSearchResponse {
   results: GameDealItem[];
 }
 
+export interface GameSuggestion {
+  game_id: string;
+  title: string;
+  cheapest_price: number;
+  thumb_url?: string;
+}
+
+export interface GameSuggestResponse {
+  prefix: string;
+  count: number;
+  suggestions: GameSuggestion[];
+}
+
 export interface AnalyzeRequest {
   title: string;
   current_price: number;
