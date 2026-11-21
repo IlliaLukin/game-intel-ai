@@ -18,6 +18,19 @@ class GameSearchResponse(BaseModel):
     results: List[GameDealItem]
 
 
+class GameSuggestion(BaseModel):
+    game_id: str
+    title: str
+    cheapest_price: float
+    thumb_url: Optional[str] = None
+
+
+class GameSuggestResponse(BaseModel):
+    prefix: str
+    count: int
+    suggestions: List[GameSuggestion]
+
+
 class AnalyzeRequest(BaseModel):
     title: str = Field(..., min_length=1, description="Title of the video game")
     current_price: float = Field(..., ge=0, description="Current price in USD/EUR")

@@ -1,7 +1,7 @@
 import logging
 from typing import List, Dict, Any, Optional
 import httpx
-from app.schemas import GameDealItem
+from app.schemas import GameDealItem, GameSuggestion
 
 logger = logging.getLogger(__name__)
 
@@ -156,3 +156,54 @@ async def search_game_deals(title: str, limit: int = 10) -> List[GameDealItem]:
 
     # Tier 3: Curated offline fallback
     return get_fallback_deals(clean_title)
+
+
+async def get_game_suggestions(prefix: str, limit: int = 6) -> List[GameSuggestion]:
+    if not prefix or not prefix.strip():
+        return []
+
+    clean = prefix.strip()
+    try:
+        async with httpx.AsyncClient(timeout=10.0, headers=DEFAULT_HEADERS) as client:
+            response = await client.get(
+                CHEAPSHARK_GAMES_URL,
+                params={"title": clean, "limit": limit},
+            )
+            if response.status_code == 200:
+                data = response.json()
+                if isinstance(data, list) and len(data) > 0:
+                    suggestions: List[GameSuggestion] = []
+                    for item in data:
+                        try:
+                            cheapest_val = float(item.get("cheapest", 0.0))
+                            suggestions.append(
+                                GameSuggestion(
+                                    game_id=str(item.get("gameID", "")),
+                                    title=str(item.get("external", "Unknown Title")),
+                                    cheapest_price=cheapest_val,
+                                    thumb_url=item.get("thumb"),
+                                )
+                            )
+                        except (ValueError, TypeError):
+                            continue
+                    if suggestions:
+                        return suggestions[:limit]
+    except Exception as e:
+        logger.warning("CheapShark game suggestions error: %s", e)
+
+    # Fallback to local curated deals
+    clean_lower = clean.lower()
+    fallback_suggestions: List[GameSuggestion] = []
+    for key, deals in FALLBACK_DEALS.items():
+        if key in clean_lower or clean_lower in key or any(clean_lower in d.title.lower() for d in deals):
+            for d in deals:
+                fallback_suggestions.append(
+                    GameSuggestion(
+                        game_id=d.game_id,
+                        title=d.title,
+                        cheapest_price=d.sale_price,
+                        thumb_url=d.thumb_url,
+                    )
+                )
+    return fallback_suggestions[:limit]
+

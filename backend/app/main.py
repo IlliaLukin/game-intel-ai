@@ -4,11 +4,12 @@ from fastapi import FastAPI, Query
 from fastapi.middleware.cors import CORSMiddleware
 from app.schemas import (
     GameSearchResponse,
+    GameSuggestResponse,
     AnalyzeRequest,
     AnalyzeResponse,
     HealthResponse,
 )
-from app.services.deals import search_game_deals
+from app.services.deals import search_game_deals, get_game_suggestions
 from app.services.ai import analyze_game_deal
 
 load_dotenv()
@@ -48,6 +49,19 @@ async def search_games(
         query=query,
         count=len(results),
         results=results,
+    )
+
+
+@app.get("/api/games/suggest", response_model=GameSuggestResponse)
+async def suggest_games(
+    prefix: str = Query(..., min_length=1, description="Game title search prefix"),
+    limit: int = Query(6, ge=1, le=20),
+):
+    suggestions = await get_game_suggestions(prefix, limit=limit)
+    return GameSuggestResponse(
+        prefix=prefix,
+        count=len(suggestions),
+        suggestions=suggestions,
     )
 
 
