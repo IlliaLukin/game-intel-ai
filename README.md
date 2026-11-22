@@ -1,6 +1,6 @@
 # GameIntel AI — Eneba Deal & Sentiment Companion
 
-[![CI Pipeline](https://github.com/alexb/gameintel-ai/actions/workflows/ci.yml/badge.svg)](https://github.com/alexb/gameintel-ai/actions/workflows/ci.yml)
+[![CI Pipeline](https://github.com/IlliaLukin/game-intel-ai/actions/workflows/ci.yml/badge.svg)](https://github.com/IlliaLukin/game-intel-ai/actions/workflows/ci.yml)
 [![Python 3.12](https://img.shields.io/badge/Python-3.12-3776AB.svg?logo=python&logoColor=white)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.115+-009688.svg?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
 [![React 18](https://img.shields.io/badge/React-18.3-61DAFB.svg?logo=react&logoColor=black)](https://react.dev/)
@@ -294,6 +294,18 @@ gameintel-ai/
 2. **Multi-Stage Build Pipeline**: The frontend image uses a build container to compile TypeScript and bundle assets, copying only static HTML/JS/CSS to a lightweight Nginx Alpine image.
 3. **Internal Reverse Proxy**: Frontend Nginx proxies `/api/*` directly to `http://backend:8000/api/` over an isolated Docker bridge network, eliminating CORS issues and avoiding exposing backend ports directly in multi-host deployments.
 4. **Resilient Error Boundaries**: Third-party API failures (CheapShark timeouts, Gemini rate limits) are caught gracefully with user-friendly fallbacks rather than crashing unhandled.
+
+---
+
+## 👨‍💻 Author & Application Documentation
+
+- **Author:** **Illia Lukin** ([alexbiznes6@gmail.com](mailto:alexbiznes6@gmail.com))
+- **GitHub Profile:** [github.com/IlliaLukin](https://github.com/IlliaLukin)
+- **Target Opportunity:** Software Engineer (Paid Internship) at [Eneba](https://jobs.ashbyhq.com/eneba/7165fca1-a4a9-4dde-a4fd-2d2e2a7ada60) (Kaunas, Lithuania)
+- **Career Deliverables:**
+  - 📄 [English Resume (CV)](CV_English.md)
+  - ✉️ [Motivation Cover Letter](Cover_Letter_Eneba.md)
+  - 📘 [Eneba Application & Interview Preparation Guide](docs/ENEBA_APPLICATION_GUIDE.md)
 
 ---
 
