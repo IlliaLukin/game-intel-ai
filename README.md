@@ -297,15 +297,9 @@ gameintel-ai/
 
 ---
 
-## 👨‍💻 Author & Application Documentation
+## 👨‍💻 Author
 
-- **Author:** **Illia Lukin** ([alexbiznes6@gmail.com](mailto:alexbiznes6@gmail.com))
-- **GitHub Profile:** [github.com/IlliaLukin](https://github.com/IlliaLukin)
-- **Target Opportunity:** Software Engineer (Paid Internship) at [Eneba](https://jobs.ashbyhq.com/eneba/7165fca1-a4a9-4dde-a4fd-2d2e2a7ada60) (Kaunas, Lithuania)
-- **Career Deliverables:**
-  - 📄 [English Resume (CV)](CV_English.md)
-  - ✉️ [Motivation Cover Letter](Cover_Letter_Eneba.md)
-  - 📘 [Eneba Application & Interview Preparation Guide](docs/ENEBA_APPLICATION_GUIDE.md)
+- **Author:** **Illia Lukin** ([github.com/IlliaLukin](https://github.com/IlliaLukin))
 
 ---
 
